@@ -1,5 +1,34 @@
-<h1>Todos</h1>
+<main class="main__container">
 
-<myorg-todos [todos]="todos"></myorg-todos>
+  <div class="main__messages flex flex-column w-full p-2 box">
+    <ng-container *ngFor="let message of messageList">
+      <div class="messages__container" [class.current]="message.name === form.get('name')?.value">
+        <span class="messages__name">{{message.name}}</span>
+        <div class="messages__message">
+          <span class="messages__value">{{message.message}}</span>
+        </div>
+      </div>
 
-<button id="add-todo" (click)="addTodo()">Add Todo</button>
+    </ng-container>
+
+  </div>
+  <p-divider></p-divider>
+  <form [formGroup]="form" (ngSubmit)="sendMessage()" class="flex">
+    <input
+      type="text"
+      pInputText
+      formControlName="name"
+      placeholder="Type name"
+      class="w-10rem"
+    />
+    <div class="p-inputgroup">
+      <input
+        type="text"
+        pInputText
+        formControlName="message"
+        placeholder="Type message"
+      />
+      <button pButton type="submit" label="Send"></button>
+    </div>
+  </form>
+</main>

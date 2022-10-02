@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodosComponent } from './todos/todos.component';
+import { NgModule } from '@angular/core';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [TodosComponent],
-  exports: [TodosComponent],
+	imports: [CommonModule, FormsModule],
+  declarations: [],
+  exports: [],
 })
 export class UiModule {}

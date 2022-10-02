@@ -3,8 +3,103 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "data": "libs/data",
-    "todos": "apps/todos",
+    "components": {
+      "projectType": "library",
+      "root": "libs/components",
+      "sourceRoot": "libs/components/src",
+      "prefix": "myorg",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components"],
+          "options": {
+            "jestConfig": "libs/components/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/components/**/*.ts", "libs/components/**/*.html"]
+          }
+        }
+      },
+      "tags": []
+    },
+    "model": {
+      "projectType": "library",
+      "root": "libs/model",
+      "sourceRoot": "libs/model/src",
+      "prefix": "myorg",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/model"],
+          "options": {
+            "jestConfig": "libs/model/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/model/**/*.ts", "libs/model/**/*.html"]
+          }
+        }
+      },
+      "tags": []
+    },
+    "service": "libs/service",
+    "todos": {
+      "root": "apps/todos",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "stylePreprocessorOptions": {
+            "includePaths": ["libs/shared/ui/src/lib/styles"]
+          },
+          "options": {
+            "outputPath": "dist/apps/todos",
+            "index": "apps/todos/src/index.html",
+            "main": "apps/todos/src/main.ts",
+            "polyfills": "apps/todos/src/polyfills.ts",
+            "tsConfig": "apps/todos/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/todos/src/favicon.ico"],
+            "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/vela-green/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
+              "apps/todos/src/styles.scss",
+              "libs/ui/src/lib/styles/module.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "todos:build",
+            "proxyConfig": "apps/todos/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "todos:build:production"
+            }
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/todos"],
+          "options": {
+            "jestConfig": "apps/todos/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "todos-e2e": "apps/todos-e2e",
     "ui": "libs/ui"
   }

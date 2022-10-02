@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import {MessageModule} from "./message/message.module";
+import {MessageModule} from "./app/message/message.module";
 
 
 @Module({

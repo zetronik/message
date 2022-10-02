@@ -1,9 +1,13 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer} from '@nestjs/websockets';
+import {Server} from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({cors: true})
 export class MessageGateway {
+
+  @WebSocketServer() server: Server;
+
   @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  handleMessage(@MessageBody() data: string): void {
+    this.server.emit('message', data);
   }
 }

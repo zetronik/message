@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@myorg/data": ["libs/data/src/index.ts"],
+      "@myorg/components": ["libs/components/src/index.ts"],
+      "@myorg/model": ["libs/model/src/index.ts"],
+      "@myorg/service": ["libs/service/src/index.ts"],
       "@myorg/ui": ["libs/ui/src/index.ts"]
     }
   },

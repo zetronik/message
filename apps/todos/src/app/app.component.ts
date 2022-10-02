@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Todo} from "@myorg/data";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ChatService} from "@myorg/service";
+import {IChatModels, IMessageModels} from "@myorg/model";
 
 @Component({
   selector: 'myorg-root',
@@ -8,19 +9,39 @@ import {Todo} from "@myorg/data";
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  todos: Todo[] = [];
 
-  constructor(private http: HttpClient) {}
+  public form!: FormGroup;
+  public messageList: IMessageModels[] = [];
+
+  constructor(private chatService: ChatService) {
+  }
 
   ngOnInit(): void {
-    this.fetch();
+    this.initForm();
+    this.initGetMessage();
   }
 
-  fetch() {
-    this.http.get<Todo[]>('/api/todos').subscribe((t) => (this.todos = t));
+  private initForm(): void {
+    this.form = new FormGroup<IChatModels>({
+      message: new FormControl<string | null>('Hello World!', Validators.required),
+      name: new FormControl<string | null>('zetronik', Validators.required)
+    });
   }
 
-  addTodo() {
+  private initGetMessage(): void {
+    this.chatService.getNewMessage().subscribe((message: IMessageModels) => {
+      this.messageList.push(message);
+    });
+  }
 
+  public sendMessage(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const message = this.form.value;
+    this.chatService.sendMessage(message);
+    this.form.get('message')?.reset();
   }
 }
